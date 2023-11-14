@@ -1,0 +1,18 @@
+DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS listings;
+
+CREATE TABLE user(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT UNIQUE NOT NULL,
+    password TEXT NOT NULL,
+    items TEXT
+);
+
+CREATE TABLE listings(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    creator TEXT NOT NULL,
+    stock INTEGER NOT NULL,
+    title TEXT NOT NULL,
+    descript TEXT NOT NULL,
+    price DECIMAL(4,2) NOT NULL
+);
