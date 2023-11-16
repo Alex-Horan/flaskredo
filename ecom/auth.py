@@ -16,7 +16,7 @@ bp = Blueprint('auth', __name__, url_prefix='/auth')
 
 """ REGISTER PAGE """
 
-@bp.route('/signup', methods=('POST')) #might remove the get method in the future, rarely use it, if ever
+@bp.route('/signup', methods=('GET', 'POST')) #might remove the get method in the future, rarely use it, if ever
 def signup():
     if request.method == 'POST':
         username = request.form['username']
@@ -36,11 +36,13 @@ def signup():
                     (username, generate_password_hash(password)),
                 )
                 db.commit()
+                db.close()
             except db.IntegrityError:
                 error = f"Username {username} already exists."
             else:
                 return redirect(url_for('auth.login'))
         flash(error)
+        db.close()
     return render_template('auth/signup.html')
 
 
@@ -50,7 +52,7 @@ def signup():
 
 """  LOGIN PAGE  """
 
-@bp.route('/login', methods=('POST'))
+@bp.route('/login', methods=('GET', 'POST'))
 def login():
     if request.method == "POST":
         username = request.form['username']

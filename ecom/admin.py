@@ -17,15 +17,16 @@ bp = Blueprint('admin', __name__, url_prefix='/admin')
 
 
 def create_adm(uname, pwrd):
+    db = get_db()
     try:
-        db = get_db()
         db.execute(
             'INSERT INTO dev_ad (uname, password) VALUES (?,?)', (uname, generate_password_hash(pwrd))
         )
         db.commit()
+        db.close()
     except db.IntegrityError:
         return "failed to create admin account"
-    
+
 
 ##############################################################################################################################
 
@@ -52,6 +53,6 @@ def init_admin(app):
 ####################################################################################################################################
 ####################################################################################################################################
 
-@bp.route('/login', methods=('POST'))
+@bp.route('/login', methods=('GET', 'POST'))
 def ad_login():
-    pass
+    return 'meep'

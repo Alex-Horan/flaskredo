@@ -9,4 +9,4 @@ bp = Blueprint('store', __name__)
 
 @bp.route('/')
 def index():
-    return 'testing'
+    return render_template('store/home.html')
